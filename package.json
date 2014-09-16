@@ -1,0 +1,17 @@
+{
+	"name": "angular-same-height",
+	"title": "Same height directive for Angular",
+	"url": "http://www.partnermarketing.com/",
+	"author": "Twogether Creative Ltd.",
+	"copyright": "2014",
+	"version": "0.1.0",
+	"dependencies": {
+	},
+	"devDependencies": {
+		"karma": "~0.10.10",
+		"karma-jasmine": "~0.1.5",
+		"karma-phantomjs-launcher": "~0.1.4",
+		"karma-coverage": "~0.2.4",
+		"jasmine-reporters": "~0.4.0"
+	}
+}
