@@ -36,6 +36,20 @@ describe('sameHeight directive', function () {
 		expect($window.addEventListener).not.toHaveBeenCalled();
 	});
 
+	it('does not add a resize callback if the same-height attribute has only whitespace', function() {
+		element = $compile('<div same-height="   "> </div>')($rootScope);
+		$rootScope.$digest();
+
+		expect($window.addEventListener).not.toHaveBeenCalled();
+	});
+
+	it('does not add a resize callback if the same-height attribute has invalid syntax', function() {
+		element = $compile('<div same-height="invalid syntax"> </div>')($rootScope);
+		$rootScope.$digest();
+
+		expect($window.addEventListener).not.toHaveBeenCalled();
+	});
+
 	it('adds a resize callback if the same-height attribute has targets', function() {
 		element = $compile('<div same-height="query { target }"> </div>')($rootScope);
 		$rootScope.$digest();
@@ -147,7 +161,7 @@ describe('sameHeight directive', function () {
 	});
 
 	it('sets the height when the media query passes', function() {
-		element = $compile('<div same-height="(min-width: 300px) { h1 }"> <h1>header</h1> </div>')($rootScope);
+		element = $compile('<div same-height="(min-width: 300px) { h1 }"> <h1>header 1</h1> <h1>header 2</h1> </div>')($rootScope);
 		$rootScope.$digest();
 
 		$window.matchMedia = function(query) {
@@ -157,6 +171,9 @@ describe('sameHeight directive', function () {
 		spyOn($window, 'matchMedia').andCallThrough();
 
 		element[0].querySelectorAll('h1')[0].offsetParent_ = '12';
+		element[0].querySelectorAll('h1')[0].innerHeight = 24;
+		element[0].querySelectorAll('h1')[1].offsetParent_ = '12';
+		element[0].querySelectorAll('h1')[1].innerHeight = 32;
 
 		expect($window.setTimeout.calls.length).toBe(1);
 		resizeCallback();
@@ -164,6 +181,7 @@ describe('sameHeight directive', function () {
 		timeoutCallback();
 
 		expect($window.matchMedia.calls.length).toBe(1);
-		expect(element.html()).toMatch(/style="height: \d+px;? *">header/);
+		expect(element.html()).toMatch(/style="height: 32px;? *">header 1/);
+		expect(element.html()).toMatch(/style="height: 32px;? *">header 2/);
 	});
 });

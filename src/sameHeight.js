@@ -40,6 +40,7 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 	}
 
 	function isHidden(element) {
+		// `offsetParent_` is used by unit tests because `offsetParent` is read-only.
 		if (element.hasOwnProperty('offsetParent_')) {
 			return (element.offsetParent_ === null);
 		} else {
@@ -59,7 +60,7 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 						return;
 					}
 					var targets = scope.sameHeight.split('}');
-					if (targets.length === 0) {
+					if (targets.length < 2) {
 						return;
 					}
 
