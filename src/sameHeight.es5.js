@@ -1,5 +1,7 @@
 "use strict";
 
+var _toArray = function (arr) { return Array.isArray(arr) ? arr : Array.from(arr); };
+
 angular.module("partnermarketing.sameHeight", []);
 
 angular.module("partnermarketing.sameHeight").directive("sameHeight", function ($window) {
@@ -19,9 +21,9 @@ angular.module("partnermarketing.sameHeight").directive("sameHeight", function (
 			}
 		}
 
-		for (i = 0; i < elements.length; i++) {
-			elements[i].style.height = String(greatestHeight) + "px";
-		}
+		elements.map(function (element) {
+			return element.style.height = String(greatestHeight) + "px";
+		});
 	}
 
 	function removeSame(selector, element) {
@@ -31,15 +33,15 @@ angular.module("partnermarketing.sameHeight").directive("sameHeight", function (
 		}
 	}
 
-	function trimString(string) {
+	var trimString = function (string) {
 		return string.replace(/^ +/, "").replace(/ +$/, "");
-	}
+	};
 
-	function findTargetElements(selector, element) {
-		return Array.prototype.filter.call(element[0].querySelectorAll(selector), function (el) {
+	var findTargetElements = function (selector, element) {
+		return Array.apply(undefined, _toArray(element[0].querySelectorAll(selector))).filter(function (el) {
 			return !isHidden(el);
 		});
-	}
+	};
 
 	function isHidden(element) {
 		// `offsetParent_` is used by unit tests because `offsetParent` is read-only.

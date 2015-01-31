@@ -17,9 +17,7 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 			}
 		}
 
-		for (i = 0; i < elements.length; i++) {
-			elements[i].style.height = String(greatestHeight) + 'px';
-		}
+		elements.map((element) => element.style.height = String(greatestHeight) + 'px');
 	}
 
 	function removeSame(selector, element) {
@@ -29,15 +27,9 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 		}
 	}
 
-	function trimString(string) {
-		return string.replace(/^ +/, '').replace(/ +$/, '');
-	}
+	var trimString = (string) => string.replace(/^ +/, '').replace(/ +$/, '');
 
-	function findTargetElements(selector, element) {
-		return Array.prototype.filter.call(element[0].querySelectorAll(selector), function(el) {
-			return !isHidden(el);
-		});
-	}
+	var findTargetElements = (selector, element) => Array(... element[0].querySelectorAll(selector)).filter((el) => !isHidden(el));
 
 	function isHidden(element) {
 		// `offsetParent_` is used by unit tests because `offsetParent` is read-only.
@@ -92,7 +84,7 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 
 					var resizeTimer;
 
-					$window.addEventListener('resize', function() {
+					$window.addEventListener('resize', () => {
 						$window.clearTimeout(resizeTimer);
 						resizeTimer = $window.setTimeout(checkMediaQuery, 10);
 					});
