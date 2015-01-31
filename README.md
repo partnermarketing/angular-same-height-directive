@@ -1,6 +1,8 @@
 Same height directive
 =====================
 
+[![Build Status](https://travis-ci.org/amyboyd/angular-same-height-directive.svg?branch=master)](https://travis-ci.org/amyboyd/angular-same-height-directive)
+
 An Angular directive that keeps elements at the same height. This directive does not work in IE <= 8.
 
 Format:
@@ -33,4 +35,4 @@ Examples:
 Running the tests
 -----------------
 
-	node_modules/karma/bin/karma start karma.conf.js
+	npm test
