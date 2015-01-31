@@ -4,7 +4,6 @@ module.exports = function (config) {
 		files: [
 			'etc/js-tests/angular-1.2.9.js',
 			'etc/js-tests/angular-mocks.js',
-			'node_modules/6to5/browser-polyfill.js',
 			'src/sameHeight.es5.js',
 			'test/unit/*.js'
 		],
