@@ -7,11 +7,11 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 		// Ensure we aren't calculating based on any previously forced heights.
 		removeSame(selector, element);
 
-		var greatestHeight = 0;
+		let greatestHeight = 0;
 
-		var elements = findTargetElements(selector, element);
+		const elements = findTargetElements(selector, element);
 
-		for (var i = 0; i < elements.length; i++) {
+		for (let i = 0; i < elements.length; i++) {
 			if (elements[i].innerHeight > greatestHeight) {
 				greatestHeight = elements[i].innerHeight;
 			}
@@ -21,15 +21,15 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 	}
 
 	function removeSame(selector, element) {
-		var elements = findTargetElements(selector, element);
-		for (var i = 0; i < elements.length; i++) {
+		const elements = findTargetElements(selector, element);
+		for (let i = 0; i < elements.length; i++) {
 			elements[i].style.height = 'auto';
 		}
 	}
 
-	var trimString = (string) => string.replace(/^ +/, '').replace(/ +$/, '');
+	const trimString = (string) => string.replace(/^ +/, '').replace(/ +$/, '');
 
-	var findTargetElements = (selector, element) => Array(... element[0].querySelectorAll(selector)).filter((el) => !isHidden(el));
+	const findTargetElements = (selector, element) => Array(... element[0].querySelectorAll(selector)).filter((el) => !isHidden(el));
 
 	function isHidden(element) {
 		// `offsetParent_` is used by unit tests because `offsetParent` is read-only.
@@ -51,15 +51,15 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 					if (!angular.isString(scope.sameHeight)) {
 						return;
 					}
-					var targets = scope.sameHeight.split('}');
+					const targets = scope.sameHeight.split('}');
 					if (targets.length < 2) {
 						return;
 					}
 
-					var mediaQueriesAndTargets = [];
-					for (var i = 0; i < targets.length; i++) {
-						var mediaQuery = trimString(targets[i].replace(/^(.+)\{.+$/, '$1'));
-						var target = trimString(targets[i].replace(/^.+\{(.+)$/, '$1'));
+					const mediaQueriesAndTargets = [];
+					for (let i = 0; i < targets.length; i++) {
+						const mediaQuery = trimString(targets[i].replace(/^(.+)\{.+$/, '$1'));
+						const target = trimString(targets[i].replace(/^.+\{(.+)$/, '$1'));
 
 						if (mediaQuery === '' && target === '') {
 							continue;
@@ -69,9 +69,9 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 					}
 
 					function checkMediaQuery() {
-						for (var i = 0; i < mediaQueriesAndTargets.length; i++) {
-							var mediaQuery = mediaQueriesAndTargets[i][0];
-							var selector = mediaQueriesAndTargets[i][1];
+						for (let i = 0; i < mediaQueriesAndTargets.length; i++) {
+							const mediaQuery = mediaQueriesAndTargets[i][0];
+							const selector = mediaQueriesAndTargets[i][1];
 
 							if (mediaQuery === '*' ||
 									(typeof $window.matchMedia !== 'undefined' && $window.matchMedia(mediaQuery))) {
@@ -82,7 +82,7 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 						}
 					}
 
-					var resizeTimer;
+					let resizeTimer;
 
 					$window.addEventListener('resize', () => {
 						$window.clearTimeout(resizeTimer);

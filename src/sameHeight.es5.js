@@ -97,7 +97,7 @@ angular.module("partnermarketing.sameHeight").directive("sameHeight", function (
 						}
 					}
 
-					var resizeTimer;
+					var resizeTimer = undefined;
 
 					$window.addEventListener("resize", function () {
 						$window.clearTimeout(resizeTimer);
