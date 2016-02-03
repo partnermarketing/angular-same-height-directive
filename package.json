@@ -4,7 +4,7 @@
   "url": "http://www.partnermarketing.com/",
   "author": "Twogether Creative Ltd.",
   "copyright": "2014",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "dependencies": {},
   "scripts": {
     "prepublish": "grunt build && npm run test",
