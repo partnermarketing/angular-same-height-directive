@@ -7,7 +7,7 @@ module.exports = function (grunt) {
         '6to5': {
             dist: {
                 files: {
-                    'src/sameHeight.es5.js': 'src/sameHeight.es6.js'
+                    'dist/sameHeight.es5.js': 'src/sameHeight.es6.js'
                 }
             }
         },
@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 files: ['src/sameHeight.es6.js'],
-                tasks: ['6to5', 'concat',],
+                tasks: ['build',],
                 options: {
                     debounceDelay: 100,
                 },
@@ -23,23 +23,34 @@ module.exports = function (grunt) {
         },
 
         concat: {
-            options: {
-                banner: "// This file is compiled from sameHeight.es6.js. All direct edits will be lost.\n\n"
-            },
-            dist: {
+            distEs5: {
+                options: {
+                    banner: "// This file is compiled from sameHeight.es6.js. All direct edits will be lost.\n\n"
+                },
                 files: {
-                    'src/sameHeight.es5.js': [
+                    'dist/sameHeight.es5.js': [
                         'node_modules/6to5/browser-polyfill.js',
-                        'src/sameHeight.es5.js',
-                    ]
+                        'dist/sameHeight.es5.js',
+                    ],
+                }
+            },
+            distEs6: {
+                files: {
+                    'dist/sameHeight.es6.js': [
+                        'src/sameHeight.es6.js',
+                    ],
                 }
             }
         }
     });
 
     grunt.registerTask('default', [
+        'build',
+        'watch',
+    ]);
+
+    grunt.registerTask('build', [
         '6to5',
         'concat',
-        'watch',
     ]);
 };

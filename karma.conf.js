@@ -4,7 +4,7 @@ module.exports = function (config) {
 		files: [
 			'etc/js-tests/angular-1.2.9.js',
 			'etc/js-tests/angular-mocks.js',
-			'src/sameHeight.es5.js',
+			'dist/sameHeight.es5.js',
 			'test/unit/*.js'
 		],
 
@@ -16,7 +16,7 @@ module.exports = function (config) {
 		reporters: ['dots', 'coverage'],
 
 		preprocessors: {
-			'src/sameHeight.es5.js': 'coverage',
+			'dist/sameHeight.es5.js': 'coverage',
 		},
 
 		coverageReporter: {

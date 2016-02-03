@@ -1,0 +1,7 @@
+node_modules/
+src/
+build/
+test/
+etc/
+Gruntfile.js
+karma.conf.js

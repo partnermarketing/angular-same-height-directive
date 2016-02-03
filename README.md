@@ -1,9 +1,20 @@
 Same height directive
 =====================
 
+An Angular directive that keeps elements at the same height.
+
+(This directive does not work in IE <= 8.)
+
 [![Build Status](https://travis-ci.org/amyboyd/angular-same-height-directive.svg?branch=master)](https://travis-ci.org/amyboyd/angular-same-height-directive)
 
-An Angular directive that keeps elements at the same height. This directive does not work in IE <= 8.
+How to install
+--------------
+
+	npm install angular-same-height --save
+
+
+How to use
+----------
 
 Format:
 
