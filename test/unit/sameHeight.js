@@ -10,6 +10,32 @@ describe('sameHeight directive', function () {
 
 	beforeEach(function () {
 		module('partnermarketing.sameHeight');
+
+		$window = {
+			clearTimeout: function() {
+			},
+			parseInt: function(number) {
+				return window.parseInt(number);
+			},
+			matchMedia: function(query) {
+				expect(query).toBe('(min-width: 300px)');
+				return true;
+			},
+			getComputedStyle: function(element) {
+				return {
+					getPropertyValue: function(property) {
+						if (!element.mockComputedStyle) {
+							return undefined;
+						}
+						return element.mockComputedStyle[property];
+					},
+				};
+			}
+		};
+
+		module(function($provide) {
+			$provide.value('$window', $window);
+		});
 	});
 
 	beforeEach(inject(function(_$compile_, _$rootScope_, _$window_) {
@@ -37,7 +63,7 @@ describe('sameHeight directive', function () {
 	});
 
 	it('does not add a resize callback if the same-height attribute has only whitespace', function() {
-		element = $compile('<div same-height="   "> </div>')($rootScope);
+		element = $compile('<div same-height="	 "> </div>')($rootScope);
 		$rootScope.$digest();
 
 		expect($window.addEventListener).not.toHaveBeenCalled();
@@ -164,23 +190,16 @@ describe('sameHeight directive', function () {
 		element = $compile('<div same-height="(min-width: 300px) { h1 }"> <h1>header 1</h1> <h1>header 2</h1> </div>')($rootScope);
 		$rootScope.$digest();
 
-		$window.matchMedia = function(query) {
-			expect(query).toBe('(min-width: 300px)');
-			return true;
-		};
-		spyOn($window, 'matchMedia').andCallThrough();
-
 		element[0].querySelectorAll('h1')[0].offsetParent_ = '12';
-		element[0].querySelectorAll('h1')[0].innerHeight = 24;
+		element[0].querySelectorAll('h1')[0].mockComputedStyle = {height: 24};
 		element[0].querySelectorAll('h1')[1].offsetParent_ = '12';
-		element[0].querySelectorAll('h1')[1].innerHeight = 32;
+		element[0].querySelectorAll('h1')[1].mockComputedStyle = {height: 32};
 
 		expect($window.setTimeout.calls.length).toBe(1);
 		resizeCallback();
 		expect($window.setTimeout.calls.length).toBe(2);
 		timeoutCallback();
 
-		expect($window.matchMedia.calls.length).toBe(1);
 		expect(element.html()).toMatch(/style="height: 32px;? *">header 1/);
 		expect(element.html()).toMatch(/style="height: 32px;? *">header 2/);
 	});

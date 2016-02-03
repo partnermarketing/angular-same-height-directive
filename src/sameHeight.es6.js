@@ -3,6 +3,10 @@ angular.module('partnermarketing.sameHeight', []);
 angular.module('partnermarketing.sameHeight').directive('sameHeight', ['$window', function ($window) {
 	'use strict';
 
+	function getElementHeight(element) {
+		return $window.parseInt($window.getComputedStyle(element, null).getPropertyValue('height'), 10);
+	}
+
 	function same(selector, element) {
 		// Ensure we aren't calculating based on any previously forced heights.
 		removeSame(selector, element);
@@ -12,12 +16,15 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', ['$window'
 		const elements = findTargetElements(selector, element);
 
 		for (let i = 0; i < elements.length; i++) {
-			if (elements[i].innerHeight > greatestHeight) {
-				greatestHeight = elements[i].innerHeight;
+			const height = getElementHeight(elements[i]);
+
+			if (height > greatestHeight) {
+				greatestHeight = height;
 			}
 		}
 
-		elements.map((element) => element.style.height = String(greatestHeight) + 'px');
+		const newHeightCss = String(greatestHeight) + 'px'
+		elements.map((element) => element.style.height = newHeightCss);
 	}
 
 	function removeSame(selector, element) {
