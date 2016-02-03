@@ -100,15 +100,13 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', ['$window'
 					// Watch for DOM mutation, which could mean elements being inserted or styles
 					// changing, and make sure we recalculate the heights after DOM mutation.
 					const domMutationEvents = [
-						'DOMAttrModified',
 						'DOMAttributeNameChanged',
 						'DOMCharacterDataModified',
 						'DOMElementNameChanged',
 						'DOMNodeInserted',
 						'DOMNodeInsertedIntoDocument',
 						'DOMNodeRemoved',
-						'DOMNodeRemovedFromDocument',
-						'DOMSubtreeModified',
+						'DOMNodeRemovedFromDocument'
 					];
 					for (let i = 0; i < domMutationEvents.length; i++) {
 						element[0].addEventListener(domMutationEvents[i], checkMediaQuery);
