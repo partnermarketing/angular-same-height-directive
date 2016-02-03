@@ -96,6 +96,23 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', ['$window'
 						resizeTimer = $window.setTimeout(checkMediaQuery, 10);
 					});
 					resizeTimer = $window.setTimeout(checkMediaQuery, 10);
+
+					// Watch for DOM mutation, which could mean elements being inserted or styles
+					// changing, and make sure we recalculate the heights after DOM mutation.
+					const domMutationEvents = [
+						'DOMAttrModified',
+						'DOMAttributeNameChanged',
+						'DOMCharacterDataModified',
+						'DOMElementNameChanged',
+						'DOMNodeInserted',
+						'DOMNodeInsertedIntoDocument',
+						'DOMNodeRemoved',
+						'DOMNodeRemovedFromDocument',
+						'DOMSubtreeModified',
+					];
+					for (let i = 0; i < domMutationEvents.length; i++) {
+						element[0].addEventListener(domMutationEvents[i], checkMediaQuery);
+					}
 				}
 			};
 		}
