@@ -1,6 +1,6 @@
 angular.module('partnermarketing.sameHeight', []);
 
-angular.module('partnermarketing.sameHeight').directive('sameHeight', function($window) {
+angular.module('partnermarketing.sameHeight').directive('sameHeight', ['$window', function ($window) {
 	'use strict';
 
 	function same(selector, element) {
@@ -93,4 +93,4 @@ angular.module('partnermarketing.sameHeight').directive('sameHeight', function($
 			};
 		}
 	};
-});
+}]);
